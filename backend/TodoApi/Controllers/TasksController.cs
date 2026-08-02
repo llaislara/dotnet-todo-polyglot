@@ -5,8 +5,9 @@ using TodoApi.Models;
 
 namespace TodoApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/tasks")]
     [ApiController]
+    [Tags("Tasks Management")]
     public class TasksController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -16,9 +17,9 @@ namespace TodoApi.Controllers
             _context = context;
         }
 
-        // GET: api/tasks (Com suporte a filtros opcionais por status e data de vencimento)
+        // GET: api/tasks (Com suporte a filtros opcionais por status e data inicial)
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskItem>>> GetTasks([FromQuery] string? status, [FromQuery] DateTime? dueDate)
+        public async Task<ActionResult<IEnumerable<TaskItem>>> GetTasks([FromQuery] string? status, [FromQuery] DateTime? date)
         {
             var query = _context.Tasks.AsQueryable();
 
@@ -27,21 +28,12 @@ namespace TodoApi.Controllers
                 query = query.Where(t => t.Status == status);
             }
 
-            if (dueDate.HasValue)
+            if (date.HasValue)
             {
-                query = query.Where(t => t.DueDate.Date == dueDate.Value.Date);
+                query = query.Where(t => t.StartDate.HasValue && t.StartDate.Value.Date == date.Value.Date);
             }
 
             return await query.ToListAsync();
-        }
-
-        // POST: api/tasks (Cria uma nova tarefa)
-        [HttpPost]
-        public async Task<ActionResult<TaskItem>> PostTask(TaskItem task)
-        {
-            _context.Tasks.Add(task);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetTasks), new { id = task.Id }, task);
         }
 
         // PUT: api/tasks/5 (Atualiza uma tarefa existente)
