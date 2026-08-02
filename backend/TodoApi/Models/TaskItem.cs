@@ -4,8 +4,12 @@ namespace TodoApi.Models
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public string Status { get; set; } = "Pendente"; // "Pendente", "Em andamento", "Concluído"
-        public DateTime DueDate { get; set; }
+        public string? Subtitle { get; set; }
+        public string? Priority { get; set; } 
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string Status { get; set; } = "A Fazer";
+        public bool IsCompleted { get; set; } = false; 
+        public DateTime? DeletedAt { get; set; }
     }
 }
