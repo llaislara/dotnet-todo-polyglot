@@ -149,3 +149,4 @@ C:\Users\lais.baptista\dotnet-todo-polyglot\backend\TodoApi\obj\Debug\net10.0\re
 C:\Users\lais.baptista\dotnet-todo-polyglot\backend\TodoApi\obj\Debug\net10.0\TodoApi.pdb
 C:\Users\lais.baptista\dotnet-todo-polyglot\backend\TodoApi\obj\Debug\net10.0\TodoApi.genruntimeconfig.cache
 C:\Users\lais.baptista\dotnet-todo-polyglot\backend\TodoApi\obj\Debug\net10.0\ref\TodoApi.dll
+C:\Users\lais.baptista\dotnet-todo-polyglot\backend\TodoApi\obj\Debug\net10.0\TodoApi.sourcelink.json
