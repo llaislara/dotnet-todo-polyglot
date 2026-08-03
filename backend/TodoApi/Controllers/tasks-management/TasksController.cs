@@ -17,7 +17,6 @@ namespace TodoApi.Controllers
             _context = context;
         }
 
-        // GET: api/tasks (Com suporte a filtros opcionais por status e data inicial)
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskItem>>> GetTasks([FromQuery] string? status, [FromQuery] DateTime? date)
         {
@@ -36,7 +35,6 @@ namespace TodoApi.Controllers
             return await query.ToListAsync();
         }
 
-        // PUT: api/tasks/5 (Atualiza uma tarefa existente)
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTask(int id, TaskItem task)
         {
@@ -46,7 +44,6 @@ namespace TodoApi.Controllers
             return NoContent();
         }
 
-        // DELETE: api/tasks/5 (Remove uma tarefa)
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(int id)
         {

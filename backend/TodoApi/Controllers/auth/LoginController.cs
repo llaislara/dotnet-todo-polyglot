@@ -45,7 +45,6 @@ public class LoginController : ControllerBase
         var jwtKey = _configuration["Jwt:Key"] ?? "MinhaChaveSuperSecretaComMaisDe32CaracteresParaGarantirSegurancaTotal123!";
         var key = Encoding.UTF8.GetBytes(jwtKey);
 
-        // Utilizando padrões oficiais de Claims do JWT (sub, email, name)
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]

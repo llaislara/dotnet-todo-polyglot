@@ -37,7 +37,6 @@ public class RegisterUserController : ControllerBase
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
-        // Retorna o status 201 Created utilizando a URI direta, evitando falhas de rota em controladores atômicos
         return Created($"/api/users/{user.Id}", user);
     }
 }
