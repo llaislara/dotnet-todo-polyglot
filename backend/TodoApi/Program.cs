@@ -2,12 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using TodoApi.Data;
-
-// ESSENCIAL: Impede que o .NET altere os nomes padrão das claims do JWT
-JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,12 +43,11 @@ builder.Services.AddSwaggerGen(c =>
 {
     var securityScheme = new OpenApiSecurityScheme
     {
-        Description = "Insira apenas o token JWT gerado no login (o Swagger adicionará 'Bearer ' automaticamente).",
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
         Name = "Authorization",
         In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT"
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
     };
 
     c.AddSecurityDefinition("Bearer", securityScheme);
@@ -71,6 +66,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Criação do banco de dados automaticamente
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

@@ -42,17 +42,17 @@ public class LoginController : ControllerBase
         }
 
         var tokenHandler = new JwtSecurityTokenHandler();
-        
         var jwtKey = _configuration["Jwt:Key"] ?? "MinhaChaveSuperSecretaComMaisDe32CaracteresParaGarantirSegurancaTotal123!";
-        var key = Encoding.UTF8.GetBytes(jwtKey); // Codificação UTF8 
+        var key = Encoding.UTF8.GetBytes(jwtKey);
 
+        // Utilizando padrões oficiais de Claims do JWT (sub, email, name)
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.Name)
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.Name, user.Name)
             }),
             Expires = DateTime.UtcNow.AddYears(100),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

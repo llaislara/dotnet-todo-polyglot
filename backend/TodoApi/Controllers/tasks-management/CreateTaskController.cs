@@ -25,15 +25,16 @@ public class CreateTaskController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<TaskItem>> Handle([FromBody] TaskItem task)
     {
-        // Extrai o ID do usuário logado diretamente das claims do token JWT
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
+                       ?? User.FindFirst("sub")?.Value;
+
         if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
         {
             return Unauthorized(new { message = "Usuário não autenticado ou ID inválido nas claims." });
         }
 
         task.Id = 0;
-        task.UserId = userId; // Associa a tarefa ao usuário autenticado[cite: 1]
+        task.UserId = userId;
         task.IsCompleted = false;
 
         var validStatuses = new[] { "Concluído", "Em Andamento", "A Fazer", "Excluído" };

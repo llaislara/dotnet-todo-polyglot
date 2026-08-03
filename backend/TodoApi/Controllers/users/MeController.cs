@@ -15,13 +15,18 @@ public class MeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public IActionResult Handle()
     {
-        var userIdStr = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var email = User.FindFirst(ClaimTypes.Email)?.Value;
-        var name = User.FindFirst(ClaimTypes.Name)?.Value;
+        var userIdStr = User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
+                     ?? User.FindFirst("nameid")?.Value 
+                     ?? User.FindFirst("sub")?.Value;
+        var email = User.FindFirst(ClaimTypes.Email)?.Value 
+                 ?? User.FindFirst("email")?.Value;
+        var name = User.FindFirst(ClaimTypes.Name)?.Value 
+                ?? User.FindFirst("unique_name")?.Value 
+                ?? User.FindFirst("name")?.Value;
 
         if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int id))
         {
-            return Unauthorized(new { message = "Usuário não autenticado ou ID inválido." });
+            return Unauthorized(new { message = "Usuário não autenticado ou ID inválido nas claims." });
         }
 
         string? token = null;
