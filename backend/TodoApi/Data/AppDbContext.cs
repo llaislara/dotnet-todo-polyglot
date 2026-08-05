@@ -9,4 +9,7 @@ public class AppDbContext : DbContext
 
     public DbSet<UserItem> Users => Set<UserItem>();
     public DbSet<TaskItem> Tasks => Set<TaskItem>();
+    public DbSet<TaskShare> TaskShares => Set<TaskShare>();
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+    public DbSet<BlacklistedToken> BlacklistedTokens => Set<BlacklistedToken>();
 }

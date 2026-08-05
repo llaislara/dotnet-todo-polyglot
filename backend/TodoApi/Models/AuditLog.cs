@@ -1,0 +1,13 @@
+namespace TodoApi.Models;
+
+public class AuditLog
+{
+    public int Id { get; set; }
+    public int? UserId { get; set; } 
+    public UserItem? User { get; set; } 
+    public string Action { get; set; } = string.Empty; 
+    public string EntityType { get; set; } = string.Empty; 
+    public int? EntityId { get; set; } 
+    public string Details { get; set; } = string.Empty; 
+    public DateTime CreatedAt { get; set; } 
+}
